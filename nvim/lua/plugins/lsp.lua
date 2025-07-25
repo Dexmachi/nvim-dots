@@ -1,39 +1,49 @@
 return {
   {
-    "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
+    "williamboman/mason.nvim",
     opts = {
-      ---@type lspconfig.options
-      servers = {
-        pyright = {},
+      ensure_installed = {
+        "stylua",
+        "shellcheck",
+        "shfmt",
+        "flake8",
+        "black",
+        "ansible-lint",
+        "isort",
+        "prettier",
       },
     },
   },
-
+  {
+    "williamboman/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        "lua_ls",
+        "tailwindcss",
+        "bashls",
+        "ansiblels",
+        "pyright",
+        "jsonls",
+        "tsserver",
+      },
+    },
+  },
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      "jose-elias-alvarez/typescript.nvim",
-      init = function()
-        require("lazyvim.util").lsp.on_attach(function(_, buffer)
-          vim.keymap.set("n", "<leader>co", "TypescriptOrganizeImports", { buffer = buffer, desc = "Organize Imports" })
-          vim.keymap.set("n", "<leader>cR", "TypescriptRenameFile", { desc = "Rename File", buffer = buffer })
-        end)
-      end,
-    },
-    ---@class PluginLspOpts
-    opts = {
-      ---@type lspconfig.options
-      servers = {
-        tsserver = {},
-      },
-      ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
-      setup = {
-        tsserver = function(_, opts)
-          require("typescript").setup({ server = opts })
-          return true
-        end,
-      },
-    },
+    config = function()
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({})
+      lspconfig.tsserver.setup({})
+      lspconfig.tailwindcss.setup({})
+      lspconfig.bashls.setup({})
+      lspconfig.ansiblels.setup({})
+      lspconfig.jsonls.setup({})
+      lspconfig.pyright.setup({})
+      lspconfig.ansiblels.setup({})
+
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
+      vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
+    end,
   },
 }
