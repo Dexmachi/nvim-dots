@@ -3,6 +3,14 @@ return {
     "michaelrommel/nvim-silicon",
     lazy = true,
     cmd = "Silicon",
+    keys = {
+      {
+        "<leader>p",
+        ":Silicon<CR>",
+        mode = "v",
+        desc = "Screenshot",
+      },
+    },
     config = function()
       require("silicon").setup({
         font = "JetBrainsMono Nerd Font=34;Noto Color Emoji=34",

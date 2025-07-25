@@ -19,6 +19,14 @@ return {
         "rust",
         "java",
         "cpp",
+        "rust",
+        "go",
+      },
+      highlight = {
+        enable = true,
+      },
+      indent = {
+        enable = true,
       },
     },
   },
