@@ -1,111 +1,110 @@
 return {
   {
-    "nvimdev/dashboard-nvim",
-    lazy = false, -- não pode ser lazy pra funcionar bem com stdin
-    priority = 1000, -- garante que carrega cedo
-    config = function()
-      local logo = [[
-██████╗ ██╗ ██████╗ ███╗   ██╗██╗   ██╗███████╗██╗   ██╗███████╗
-██╔══██╗██║██╔═══██╗████╗  ██║╚██╗ ██╔╝██╔════╝██║   ██║██╔════╝
-██║  ██║██║██║   ██║██╔██╗ ██║ ╚████╔╝ ███████╗██║   ██║███████╗
-██║  ██║██║██║   ██║██║╚██╗██║  ╚██╔╝  ╚════██║██║   ██║╚════██║
-██████╔╝██║╚██████╔╝██║ ╚████║   ██║   ███████║╚██████╔╝███████║
-╚═════╝ ╚═╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝ ╚══════╝
-                                                                
-]]
-
-      logo = string.rep("\n", 8) .. logo .. "\n\n"
-
-      require("dashboard").setup({
-        theme = "doom",
-        hide = { statusline = false },
-        config = {
-          header = vim.split(logo, "\n"),
-          center = {
-            {
-              action = "lua LazyVim.pick()()",
-              desc = " Find File",
-              icon = " ",
-              key = "f",
-            },
-            {
-              action = "ene | startinsert",
-              desc = " New File",
-              icon = " ",
-              key = "n",
-            },
-            {
-              action = 'lua LazyVim.pick("oldfiles")()',
-              desc = " Recent Files",
-              icon = " ",
-              key = "r",
-            },
-            {
-              action = 'lua LazyVim.pick("live_grep")()',
-              desc = " Find Text",
-              icon = " ",
-              key = "g",
-            },
-            {
-              action = "lua LazyVim.pick.config_files()()",
-              desc = " Config",
-              icon = " ",
-              key = "c",
-            },
-            {
-              action = 'lua require("persistence").load()',
-              desc = " Restore Session",
-              icon = " ",
-              key = "s",
-            },
-            {
-              action = "LazyExtras",
-              desc = " Lazy Extras",
-              icon = " ",
-              key = "x",
-            },
-            {
-              action = "Lazy",
-              desc = " Lazy",
-              icon = "󰒲 ",
-              key = "l",
-            },
-            {
-              action = function()
-                vim.api.nvim_input("<cmd>qa<cr>")
-              end,
-              desc = " Quit",
-              icon = " ",
-              key = "q",
-            },
-          },
-          footer = function()
-            local stats = require("lazy").stats()
-            local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-            return { "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms" }
-          end,
-        },
-      })
-
-      -- Corrige bug de statusline depois de fechar Lazy
-      if vim.o.filetype == "lazy" then
-        vim.api.nvim_create_autocmd("WinClosed", {
-          pattern = tostring(vim.api.nvim_get_current_win()),
-          once = true,
-          callback = function()
-            vim.schedule(function()
-              vim.api.nvim_exec_autocmds("UIEnter", { group = "dashboard" })
-            end)
-          end,
-        })
-      end
-    end,
-  },
-  {
     "folke/snacks.nvim",
+    ---@type snacks.Config
     opts = {
       dashboard = {
-        enabled = false,
+        ---@class snacks.dashboard.Config
+        ---@field enabled? boolean
+        ---@field sections snacks.dashboard.Section
+        ---@field formats table<string, snacks.dashboard.Text|fun(item:snacks.dashboard.Item, ctx:snacks.dashboard.Format.ctx):snacks.dashboard.Text>
+
+        width = 60,
+        row = nil, -- dashboard position. nil for center
+        col = nil, -- dashboard position. nil for center
+        pane_gap = 4, -- empty columns between vertical panes
+        autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", -- autokey sequence
+        -- These settings are used by some built-in sections
+        preset = {
+          ---@type fun(cmd:string, opts:table)|nil
+          pick = nil,
+          ---@type snacks.dashboard.Item[]
+          keys = {
+            { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+            { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+            { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+            { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+            {
+              icon = " ",
+              key = "c",
+              desc = "Config",
+              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+            },
+            { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+            {
+              icon = "󰒲 ",
+              key = "x",
+              desc = "LazyExtra",
+              action = ":LazyExtra",
+              enabled = package.loaded.lazy ~= nil,
+            },
+            { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+            { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          },
+          -- Used by the `header` section
+          header = [[
+                                            ██████╗ ███████╗██╗  ██╗███╗   ███╗ █████╗  ██████╗██╗  ██╗██╗███╗   ██╗ █████╗ 
+                                            ██╔══██╗██╔════╝╚██╗██╔╝████╗ ████║██╔══██╗██╔════╝██║  ██║██║████╗  ██║██╔══██╗
+                                            ██║  ██║█████╗   ╚███╔╝ ██╔████╔██║███████║██║     ███████║██║██╔██╗ ██║███████║
+                                            ██║  ██║██╔══╝   ██╔██╗ ██║╚██╔╝██║██╔══██║██║     ██╔══██║██║██║╚██╗██║██╔══██║
+                                            ██████╔╝███████╗██╔╝ ██╗██║ ╚═╝ ██║██║  ██║╚██████╗██║  ██║██║██║ ╚████║██║  ██║
+                                            ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
+                                                                                ]],
+        },
+        -- item field formatters
+        formats = {
+          icon = function(item)
+            if item.file and item.icon == "file" or item.icon == "directory" then
+              return M.icon(item.file, item.icon)
+            end
+            return { item.icon, width = 2, hl = "icon" }
+          end,
+          footer = { "%s", align = "center" },
+          header = { "%s", align = "left" },
+          file = function(item, ctx)
+            local fname = vim.fn.fnamemodify(item.file, ":~")
+            fname = ctx.width and #fname > ctx.width and vim.fn.pathshorten(fname) or fname
+            if #fname > ctx.width then
+              local dir = vim.fn.fnamemodify(fname, ":h")
+              local file = vim.fn.fnamemodify(fname, ":t")
+              if dir and file then
+                file = file:sub(-(ctx.width - #dir - 2))
+                fname = dir .. "/…" .. file
+              end
+            end
+            local dir, file = fname:match("^(.*)/(.+)$")
+            return dir and { { dir .. "/", hl = "dir" }, { file, hl = "file" } } or { { fname, hl = "file" } }
+          end,
+        },
+        formats = {
+          key = function(item)
+            return {
+              { "[[", hl = "special" },
+              { item.key, hl = "key" },
+              { "]]", hl = "special" },
+            }
+          end,
+          header = { "%s", align = "center" },
+        },
+
+        sections = {
+          {
+            section = "terminal",
+            cmd = "pokemon-colorscripts -r -s --no-title; sleep .1",
+            random = 1025,
+            indent = 4,
+            height = 20,
+          },
+          {
+            pane = 2,
+            padding = 1,
+            { title = "Bookmarks", padding = 1 },
+            { section = "projects", padding = 1 },
+            { title = "Dexcuts", padding = 1 },
+            { section = "keys", padding = 1 },
+          },
+          { section = "header" },
+        },
       },
     },
   },
