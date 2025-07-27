@@ -60,7 +60,7 @@ return {
             return { item.icon, width = 2, hl = "icon" }
           end,
           footer = { "%s", align = "center" },
-          header = { "%s", align = "left" },
+          header = { "%s", align = "center" },
           file = function(item, ctx)
             local fname = vim.fn.fnamemodify(item.file, ":~")
             fname = ctx.width and #fname > ctx.width and vim.fn.pathshorten(fname) or fname
