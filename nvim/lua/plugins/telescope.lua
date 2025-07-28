@@ -14,6 +14,13 @@ return {
         end,
         desc = "Find Plugin File",
       },
+      {
+        "<leader>gr",
+        function()
+          require("telescope.builtin").lsp_references()
+        end,
+        desc = "LSP References",
+      },
     },
     -- change some options
     opts = {

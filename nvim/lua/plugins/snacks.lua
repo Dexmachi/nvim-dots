@@ -14,7 +14,16 @@ return {
         enabled = true,
         timeout = 3000,
       },
-      picker = { enabled = true },
+      picker = {
+        enabled = true,
+        hidden = true, -- mostra arquivos ocultos
+        ignored = true, -- inclui arquivos ignorados do git também
+        sources = {
+          files = {
+            hidden = true, -- garante que o source `files` mostre ocultos
+          },
+        },
+      },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },
@@ -256,13 +265,6 @@ return {
           Snacks.picker.help()
         end,
         desc = "Help Pages",
-      },
-      {
-        "<leader>sH",
-        function()
-          Snacks.picker.highlights()
-        end,
-        desc = "Highlights",
       },
       {
         "<leader>si",
