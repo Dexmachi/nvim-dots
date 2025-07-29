@@ -19,12 +19,14 @@ return {
     opts = {
       ensure_installed = {
         "lua_ls",
+        "marksman",
         "tailwindcss",
         "bashls",
         "ansiblels",
         "pyright",
         "jsonls",
         "tsserver",
+        "zk",
       },
     },
   },
@@ -32,14 +34,14 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({})
+      lspconfig.marksman.setup({})
       lspconfig.tsserver.setup({})
       lspconfig.tailwindcss.setup({})
+      lspconfig.zk.setup({})
       lspconfig.bashls.setup({})
       lspconfig.ansiblels.setup({})
       lspconfig.jsonls.setup({})
       lspconfig.pyright.setup({})
-      lspconfig.ansiblels.setup({})
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
