@@ -1,6 +1,6 @@
---FIX:if true then
---FIX:  return {}
---FIX:end
+if true then
+  return {}
+end
 --NOTE: remova essa if then para ativar o plugin
 
 return {
