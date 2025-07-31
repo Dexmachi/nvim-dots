@@ -72,4 +72,10 @@ return {
     ---@type render.md.UserConfig
     opts = {},
   },
+  {
+    "Toprun123/PicVim",
+    config = function()
+      require("picvim").setup()
+    end,
+  },
 }
