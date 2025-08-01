@@ -2,5 +2,8 @@
     "diagnostics.disable": [
         "undefined-global",
         "duplicate-doc-field"
+    ],
+    "diagnostics.globals": [
+        "mason_dap"
     ]
 }

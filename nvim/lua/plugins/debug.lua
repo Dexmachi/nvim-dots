@@ -164,33 +164,13 @@ return {
         },
       }
 
-      --NOTE: adapters and configurations bash
-      dap.adapters.bashdb = {
-        type = "executable",
-        command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
-        name = "bashdb",
-      }
-      dap.configurations.sh = {
-        {
-          type = "bashdb",
-          request = "launch",
-          name = "Launch Bash script",
-          showDebugOutput = true,
-          pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bashdb_dir/bashdb",
-          pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bashdb_dir",
-          trace = true,
-          file = "${file}",
-          program = "${file}",
-          cwd = "${workspaceFolder}",
-          terminalKind = "integrated",
-        },
-      }
-
       --NOTE: adapters and configurations javascript e typescript
       dap.adapters.node2 = {
         type = "executable",
-        command = vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js",
-        args = {},
+        command = "node",
+        args = {
+          vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js",
+        },
       }
       dap.configurations.javascript = {
         {
@@ -229,6 +209,83 @@ return {
       }
       dap.configurations.cpp = dap.configurations.rust
       dap.configurations.c = dap.configurations.rust
+
+      --NOTE: adapters and configurations ansible
+      dap.adapters.ansible = {
+        type = "executable",
+        command = "python", -- or "/path/to/virtualenv/bin/python",
+        args = { "-m", "ansibug", "dap" },
+      }
+      local ansibug_configurations = {
+        {
+          type = "ansible",
+          request = "launch",
+          name = "Debug playbook",
+          playbook = "${file}",
+        },
+      }
+      dap.configurations["yaml.ansible"] = ansibug_configurations
+
+      --NOTE: adapters and configurations lua
+      local mason_path = vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode"
+
+      dap.adapters["local-lua"] = {
+        type = "executable",
+        command = "node",
+        args = {
+          mason_path .. "/extension/extension/debugAdapter.js",
+        },
+        enrich_config = function(config, on_config)
+          if not config["extensionPath"] then
+            local c = vim.deepcopy(config)
+            c.extensionPath = mason_path .. "/"
+            on_config(c)
+          else
+            on_config(config)
+          end
+        end,
+      }
+      dap.configurations.lua = {
+        {
+          type = "local-lua",
+          request = "launch",
+          name = "Debug com lldebugger",
+          program = function()
+            return vim.fn.input("Arquivo Lua: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = true,
+        },
+      }
+
+      --NOTE: adapters and configurations Bash
+      dap.adapters.bashdb = {
+        type = "executable",
+        command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
+        name = "bashdb",
+      }
+      dap.configurations.sh = {
+        {
+          type = "bashdb",
+          request = "launch",
+          name = "Launch file",
+          showDebugOutput = true,
+          pathBashdb = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
+          pathBashdbLib = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
+          trace = true,
+          file = "${file}",
+          program = "${file}",
+          cwd = "${workspaceFolder}",
+          pathCat = "cat",
+          pathBash = "/bin/bash",
+          pathMkfifo = "mkfifo",
+          pathPkill = "pkill",
+          args = {},
+          argsString = "",
+          env = {},
+          terminalKind = "integrated",
+        },
+      }
     end,
   },
 
