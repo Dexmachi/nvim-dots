@@ -134,8 +134,8 @@ return {
       local dap = require("dap")
       local dapui = require("dapui")
 
+      --NOTE: setups
       dapui.setup()
-
       dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
@@ -146,6 +146,7 @@ return {
         dapui.close()
       end
 
+      --NOTE: adapters and configurations python
       dap.adapters.python = {
         type = "executable",
         command = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python",
@@ -156,19 +157,19 @@ return {
           type = "python",
           request = "launch",
           name = "Launch file",
-          program = "${file}", -- roda o arquivo atual
+          program = "${file}",
           pythonPath = function()
             return vim.fn.exepath("python3") or "python"
           end,
         },
       }
 
+      --NOTE: adapters and configurations bash
       dap.adapters.bashdb = {
         type = "executable",
         command = vim.fn.stdpath("data") .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
         name = "bashdb",
       }
-
       dap.configurations.sh = {
         {
           type = "bashdb",
@@ -185,12 +186,12 @@ return {
         },
       }
 
+      --NOTE: adapters and configurations javascript e typescript
       dap.adapters.node2 = {
         type = "executable",
         command = vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js",
         args = {},
       }
-
       dap.configurations.javascript = {
         {
           name = "Launch file",
@@ -205,6 +206,7 @@ return {
       }
       dap.configurations.typescript = dap.configurations.javascript
 
+      --NOTE: adapters and configurations C, Cpp e rust
       dap.adapters.codelldb = {
         type = "server",
         port = "${port}",
@@ -213,7 +215,6 @@ return {
           args = { "--port", "${port}" },
         },
       }
-
       dap.configurations.rust = {
         {
           name = "Launch",
@@ -226,28 +227,8 @@ return {
           stopOnEntry = false,
         },
       }
-
       dap.configurations.cpp = dap.configurations.rust
       dap.configurations.c = dap.configurations.rust
-
-      dap.adapters.local_lua = {
-        type = "executable",
-        command = vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode/extension/debugAdapter.lua",
-        args = {},
-      }
-
-      dap.configurations.lua = {
-        {
-          type = "local_lua",
-          request = "launch",
-          name = "Launch Lua file",
-          program = function()
-            return vim.fn.input("Path to file: ", vim.fn.getcwd() .. "/", "file")
-          end,
-          cwd = "${workspaceFolder}",
-          stopOnEntry = true,
-        },
-      }
     end,
   },
 
@@ -265,6 +246,7 @@ return {
         severity_sort = true,
       })
       local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({})
       lspconfig.marksman.setup({})
       lspconfig.tsserver.setup({})
       lspconfig.tailwindcss.setup({})
