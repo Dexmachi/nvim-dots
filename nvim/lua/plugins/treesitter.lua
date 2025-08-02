@@ -32,5 +32,4 @@ return {
     },
     auto_install = false,
   },
-  { import = "lazyvim.plugins.extras.lang.json" },
 }

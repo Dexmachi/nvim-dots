@@ -45,7 +45,6 @@ return {
 
     config = function()
       local zk = require("zk")
-      local commands = require("zk.commands")
 
       zk.setup({
         picker = "telescope", -- fzf, fzf_lua, etc
@@ -72,6 +71,7 @@ return {
     ---@type render.md.UserConfig
     opts = {},
   },
+
   {
     "Toprun123/PicVim",
     config = function()
