@@ -1,5 +1,5 @@
 --INFO: Tabelas LUA para as paradas que preciso em geral
---INFO: adicione LSPs na tabela servers, Linters na tabela styles e DAPs na tabela daps
+--INFO: adicione LSPs na tabela servers, Linters e Formatters na tabela styles e DAPs na tabela daps
 local servers = { "lua_ls", "marksman", "tailwindcss", "bashls", "ansiblels", "pyright", "jsonls", "tsserver", "zk" }
 local styles = { "stylua", "shellcheck", "shfmt", "flake8", "black", "ansible-lint", "isort", "prettier" }
 local daps = { "python", "bash", "node2", "codelldb", "java-debug-adapter", "local-lua-debugger-vscode" }
