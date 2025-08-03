@@ -64,12 +64,50 @@ return {
           --          Search = { fg = "#1a0e17", bg = "#ff8ebd" },
           --          IncSearch = { fg = "#1a0e17", bg = "#ffc2dc" },
           --
-          --          -- 🍬 Menus e popups
-          Pmenu = { fg = "#ffd5ec", bg = "NONE" },
-          PmenuSel = { fg = "#ff8ebd", bg = "NONE", style = { "underline" } },
+          -- 🔲 Janela de autocomplete/documentação
+          Pmenu = { fg = "#ff8ebd", bg = "NONE" },
+          PmenuSel = { fg = "#9dcff9", bg = "NONE" },
           PmenuThumb = { bg = "#ff8ebd" },
+
+          -- 🔤 Abreviação e origem
+          CmpItemAbbr = { fg = "#ffd5ec" },
+          CmpItemAbbrMatch = { fg = "#ffb4d4", style = { "bold" } },
+          CmpItemAbbrMatchFuzzy = { fg = "#ffb4d4", style = { "italic" } },
+          CmpItemMenu = { fg = "#ff8ebd", style = { "italic" } },
+
+          -- 🧠 Tipos genéricos e por ícone
+          CmpItemKind = { fg = "#9dcff9", style = { "bold" } },
+          CmpItemKindText = { fg = "#ffd5ec" },
+          CmpItemKindMethod = { fg = "#ff70a3" },
+          CmpItemKindFunction = { fg = "#ff70a3" },
+          CmpItemKindConstructor = { fg = "#ff70a3" },
+          CmpItemKindField = { fg = "#fba6cd" },
+          CmpItemKindVariable = { fg = "#fba6cd" },
+          CmpItemKindClass = { fg = "#ffc2dc" },
+          CmpItemKindInterface = { fg = "#ffc2dc" },
+          CmpItemKindModule = { fg = "#addbff" },
+          CmpItemKindProperty = { fg = "#fba6cd" },
+          CmpItemKindUnit = { fg = "#ffaad3" },
+          CmpItemKindValue = { fg = "#ff85b9" },
+          CmpItemKindEnum = { fg = "#ff99c3" },
+          CmpItemKindKeyword = { fg = "#ffaad3" },
+          CmpItemKindSnippet = { fg = "#f0a5cb" },
+          CmpItemKindColor = { fg = "#f0a5cb" },
+          CmpItemKindFile = { fg = "#a3c8f1" },
+          CmpItemKindReference = { fg = "#9dcff9" },
+          CmpItemKindFolder = { fg = "#a3c8f1" },
+          CmpItemKindEnumMember = { fg = "#ff99c3" },
+          CmpItemKindConstant = { fg = "#ffbedd" },
+          CmpItemKindStruct = { fg = "#ffc2dc" },
+          CmpItemKindEvent = { fg = "#ff85b9" },
+          CmpItemKindOperator = { fg = "#f86ea7" },
+          CmpItemKindTypeParameter = { fg = "#ffc2dc" },
+
+          -- 🤖 Para IA (Copilot, etc)
+          CmpItemKindCopilot = { fg = "#ff8ebd" },
+          CmpItemKindAI = { fg = "#f0a5cb", style = { "italic" } },
           --
-          --          -- 🔠 Sintaxe
+          -- 🔠 Sintaxe
           Comment = { fg = "#f0a5cb", style = { "italic" } },
           String = { fg = "#ffb6d9" },
           Function = { fg = "#ff70a3", style = { "bold" } },
