@@ -1,35 +1,22 @@
+--INFO: Tabelas LUA para as paradas que preciso em geral
+--INFO: adicione LSPs na tabela servers, Linters na tabela styles e DAPs na tabela daps
+local servers = { "lua_ls", "marksman", "tailwindcss", "bashls", "ansiblels", "pyright", "jsonls", "tsserver", "zk" }
+local styles = { "stylua", "shellcheck", "shfmt", "flake8", "black", "ansible-lint", "isort", "prettier" }
+local daps = { "python", "bash", "node2", "codelldb", "java-debug-adapter", "local-lua-debugger-vscode" }
+
 return {
 
   {
     "williamboman/mason.nvim",
     opts = {
-      ensure_installed = {
-        "stylua",
-        "shellcheck",
-        "shfmt",
-        "flake8",
-        "black",
-        "ansible-lint",
-        "isort",
-        "prettier",
-      },
+      ensure_installed = styles,
     },
   },
 
   {
     "williamboman/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = {
-        "lua_ls",
-        "marksman",
-        "tailwindcss",
-        "bashls",
-        "ansiblels",
-        "pyright",
-        "jsonls",
-        "tsserver",
-        "zk",
-      },
+      ensure_installed = servers,
     },
   },
 
@@ -40,14 +27,7 @@ return {
       "mfussenegger/nvim-dap",
     },
     opts = {
-      ensure_installed = {
-        "python",
-        "bash",
-        "node2",
-        "codelldb",
-        "java-debug-adapter",
-        "local-lua-debugger-vscode",
-      },
+      ensure_installed = daps,
       automatic_setup = true,
     },
     config = function(_, opts)
@@ -145,6 +125,8 @@ return {
       dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
       end
+
+      --TODO: Modularizar configuração de DAPs
 
       --NOTE: adapters and configurations python
       dap.adapters.python = {
