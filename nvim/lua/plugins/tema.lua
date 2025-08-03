@@ -50,9 +50,9 @@ return {
           --          -- 🧱 Base UI
           --          Normal = { fg = "#fba6cd", bg = "NONE" },
           --          NormalNC = { fg = "#fba6cd", bg = "NONE" },
-          --          NormalFloat = { fg = "#fba6cd", bg = "NONE" },
-          --          FloatBorder = { fg = "#ff7bac", bg = "NONE" },
-          --          FloatTitle = { fg = "#ff8ebd", style = { "bold" } },
+          NormalFloat = { fg = "#a3c8f1", bg = "NONE" },
+          FloatBorder = { fg = "#9dcff9", bg = "NONE" },
+          FloatTitle = { fg = "#ff8ebd", bg = "NONE", style = { "bold" } },
           --          WinSeparator = { fg = "#ff6fa5" },
           --          LineNr = { fg = "#d38aa4", bg = "NONE" },
           CursorLineNr = { fg = "#f86ea7", style = { "bold" } },
@@ -100,14 +100,14 @@ return {
           ["@parameter"] = { fg = "#dd95b8" },
           ["@field"] = { fg = "#fba6cd" },
           --
-          --          -- 💡 Diagnostics
-          DiagnosticError = { fg = "#ff4f88" },
-          DiagnosticWarn = { fg = "#ffb4d4" },
-          DiagnosticInfo = { fg = "#a3c8f1" },
-          DiagnosticHint = { fg = "#cce6ff" },
-          DiagnosticUnderlineError = { sp = "#ff4f88", style = { "undercurl" } },
-          DiagnosticUnderlineWarn = { sp = "#ffb4d4", style = { "undercurl" } },
-          DiagnosticUnderlineInfo = { sp = "#a3c8f1", style = { "undercurl" } },
+          --           -- 💡 Diagnostics
+          -- DiagnosticError = { fg = "#ff4f88" },
+          -- DiagnosticWarn = { fg = "#f5e36c" },
+          -- DiagnosticInfo = { fg = "#6cf56c" },
+          -- DiagnosticHint = { fg = "#cce6ff" },
+          DiagnosticUnderlineError = { sp = "#ff4f88", style = { "underdouble", "italic" } },
+          DiagnosticUnderlineWarn = { sp = "#ffb4d4", style = { "undercurl", "italic" } },
+          DiagnosticUnderlineInfo = { sp = "#a3c8f1", style = { "undercurl", "italic" } },
           DiagnosticUnderlineHint = { sp = "#cce6ff", style = { "undercurl" } },
           --
           --          -- 🔍 Telescope
@@ -126,7 +126,10 @@ return {
           StatusLineNC = { fg = "#cfa5b6", bg = "#1a0e17" },
           --
           --          -- ✨ Outros
-          --          Todo = { fg = "#ff95c1", bg = "NONE", style = { "bold" } },
+          Hack = { fg = "#f79e45", bg = "NONE", style = { "bold" } },
+          Hint = { fg = "#cce6ff", bg = "NONE", style = { "italic" } },
+          Warn = { fg = "#f5e36c", bg = "NONE", style = { "bold" } },
+          Fix = { fg = "#ff4f88", bg = "NONE", style = { "bold" } },
         }
       end,
     },
