@@ -14,7 +14,6 @@ return {
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
@@ -63,7 +62,6 @@ return {
         }),
         sources = cmp.config.sources({
           { name = "copilot", group_index = 1 },
-          { name = "nvim_lsp_signature_help" },
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "nvim_lua" },
@@ -96,6 +94,13 @@ return {
         },
       })
 
+      vim.lsp.handlers["textDocument/hover"] = function(...)
+        if vim.api.nvim_get_mode().mode ~= "i" then
+          return vim.lsp.with(vim.lsp.handlers.hover, {
+            border = "rounded",
+          })(...)
+        end
+      end
       -- Cmdline config
       cmp.setup.cmdline("/", {
         mapping = cmp.mapping.preset.cmdline(),
