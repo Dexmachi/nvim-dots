@@ -1,4 +1,4 @@
-local daps = { "python", "bash", "node2", "codelldb", "java-debug-adapter", "local-lua-debugger-vscode" }
+local daps = { "python", "js-debug-adapter", "bash", "codelldb", "java-debug-adapter", "local-lua-debugger-vscode" }
 
 return {
   --INFO: DAPs
@@ -132,25 +132,37 @@ return {
       }
 
       --NOTE: adapters and configurations javascript e typescript
-      dap.adapters.node2 = {
-        type = "executable",
-        command = "node",
-        args = {
-          vim.fn.stdpath("data") .. "/mason/packages/node-debug2-adapter/out/src/nodeDebug.js",
+      dap.adapters["pwa-node"] = {
+        type = "server",
+        host = "localhost",
+        port = 8123,
+        executable = {
+          command = "node",
+          args = {
+            vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
+            "8123",
+          },
         },
       }
+
       dap.configurations.javascript = {
         {
-          name = "Launch file",
-          type = "node2",
+          type = "pwa-node",
           request = "launch",
+          name = "Launch file",
           program = "${file}",
           cwd = vim.fn.getcwd(),
-          sourceMaps = true,
-          protocol = "inspector",
-          console = "integratedTerminal",
+          runtimeExecutable = "node",
+        },
+        {
+          type = "pwa-node",
+          request = "attach",
+          name = "Attach",
+          processId = require("dap.utils").pick_process,
+          cwd = vim.fn.getcwd(),
         },
       }
+
       dap.configurations.typescript = dap.configurations.javascript
 
       --NOTE: adapters and configurations C, Cpp e rust

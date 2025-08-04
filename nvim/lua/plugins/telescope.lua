@@ -1,3 +1,4 @@
+local TR = require("telescope.builtin")
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -6,20 +7,53 @@ return {
     },
     keys = {
       {
-        "<leader>fp",
+        "<leader>fe",
         function()
-          require("telescope.builtin").find_files({
-            cwd = require("lazy.core.config").options.root,
-          })
+          TR.lsp_references()
         end,
-        desc = "Find Plugin File",
+        desc = "referências LSP",
       },
       {
-        "<leader>gr",
+        "<leader>fk",
         function()
-          require("telescope.builtin").lsp_references()
+          TR.keymaps()
         end,
-        desc = "LSP References",
+        desc = "encontrar keymaps",
+      },
+      {
+        "<leader>fb",
+        function()
+          TR.buffers()
+        end,
+        desc = "encontrar buffers",
+      },
+      {
+        "<leader>fh",
+        function()
+          TR.help_tags()
+        end,
+        desc = "encontrar ajuda",
+      },
+      {
+        "<leader>fd",
+        function()
+          TR.diagnostics()
+        end,
+        desc = "encontrar diagnósticos",
+      },
+      {
+        "<C-r>",
+        function()
+          TR.lsp_references()
+        end,
+        desc = "vizualizar referências LSP",
+      },
+      {
+        "<leader>f.",
+        function()
+          TR.oldfiles({ hidden = true })
+        end,
+        desc = "encontrar arquivos antigos",
       },
     },
     -- change some options
