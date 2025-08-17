@@ -42,7 +42,7 @@ return {
         desc = "encontrar diagnósticos",
       },
       {
-        "<C-r>",
+        "<C-x>",
         function()
           TR.lsp_references()
         end,

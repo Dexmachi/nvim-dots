@@ -32,56 +32,56 @@ return {
     },
     keys = {
       {
-        "<F5>",
+        "<C-e>c",
         function()
           require("dap").continue()
         end,
         desc = "Start/Continue Debug",
       },
       {
-        "<F10>",
+        "<C-e>o",
         function()
           require("dap").step_over()
         end,
         desc = "Step Over",
       },
       {
-        "<F11>",
+        "<C-e>i",
         function()
           require("dap").step_into()
         end,
         desc = "Step Into",
       },
       {
-        "<F12>",
+        "<C-e>O",
         function()
           require("dap").step_out()
         end,
         desc = "Step Out",
       },
       {
-        "<Leader>r",
+        "<C-e>s",
         function()
           require("dap").toggle_breakpoint()
         end,
         desc = "Toggle Breakpoint",
       },
       {
-        "<Leader>R",
+        "<C-e>S",
         function()
           require("dap").set_breakpoint(vim.fn.input("Condition: "))
         end,
         desc = "Conditional Breakpoint",
       },
       {
-        "<Leader>rl",
+        "<C-e>l",
         function()
           require("dap").run_last()
         end,
         desc = "Run Last Debug Session",
       },
       {
-        "<Leader>ru",
+        "<C-e>r",
         function()
           require("dapui").toggle()
         end,
